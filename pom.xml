@@ -1,23 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.dyn4j</groupId>
-  <artifactId>dyn4j-samples</artifactId>
+  <groupId>org.fhnw</groupId>
+  <artifactId>RoboSumoFightGA</artifactId>
   <version>1.0.0</version>
-  <name>dyn4j-samples</name>
   <url>http://www.dyn4j.org</url>
-  <description>A collection of samples that use the dyn4j library in a variety of ways</description>
-  <inceptionYear>2010</inceptionYear>
+  <inceptionYear>2018</inceptionYear>
   <organization>
   	<name>dyn4j</name>
-  	<url>http://www.dyn4j.org</url>
+  	<url>http://www.fhnw.ch</url>
   </organization>
   <scm>
-  	<url>https://github.com/dyn4j/dyn4j-samples</url>
+  	<url>https://github.com/schoeggi/RoboSumoFightGA</url>
   </scm>
-  <issueManagement>
-  	<system>GitHub Issues</system>
-  	<url>https://github.com/dyn4j/dyn4j-samples/issues</url>
-  </issueManagement>
   <dependencies>
   	<dependency>
   		<groupId>org.dyn4j</groupId>
@@ -35,4 +29,6 @@
   		<version>2.3.2</version>
   	</dependency>
   </dependencies>
+  <name>RoboSumoFightGA</name>
+  <description>robo sumo fight simulation based on dyn4j physics engine and a genetic algorithm</description>
 </project>
