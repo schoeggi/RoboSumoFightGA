@@ -120,6 +120,8 @@ public abstract class SimulationFrame extends JFrame {
 	final JButton pauseButton = new JButton("Pause");
 	final JButton resumeButton = new JButton("Resume");
 	final JCheckBox elitismCheckbox;
+	final JCheckBox rouletWheelCheckbox;
+
 
 	final Color buttonColorInactive = Color.lightGray;
 	final Color buttonColorActive = startButton.getBackground();
@@ -306,6 +308,8 @@ public abstract class SimulationFrame extends JFrame {
 					resumeButton.setBackground(buttonColorInactive);
 					elitismCheckbox.setBackground(buttonColorInactive);
 					elitismCheckbox.setEnabled(false);
+					rouletWheelCheckbox.setBackground(buttonColorInactive);
+					rouletWheelCheckbox.setEnabled(false);
 
 					// display/center the jdialog when the button is pressed
 					// JDialog d = new JDialog(frame, "Hello", true);
@@ -339,6 +343,8 @@ public abstract class SimulationFrame extends JFrame {
 				pauseButton.setBackground(buttonColorInactive);
 				elitismCheckbox.setBackground(buttonColorActive);
 				elitismCheckbox.setEnabled(true);
+				rouletWheelCheckbox.setBackground(buttonColorActive);
+				rouletWheelCheckbox.setEnabled(true);
 
 				startButton.setEnabled(true);
 				paused = true;
@@ -383,14 +389,14 @@ public abstract class SimulationFrame extends JFrame {
 			}
 		});
 
-		elitismCheckbox = new JCheckBox("Use elitism");
+		elitismCheckbox = new JCheckBox("Use elitism for GA");
 		elitismCheckbox.setMnemonic(KeyEvent.VK_C);
 		elitismCheckbox.setSelected(true);
 		elitismCheckbox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					Algorithm.setElitism(true);
-					System.out.println("elitism pressed");
+					System.out.println("Elitism pressed");
 				} else {
 					Algorithm.setElitism(false);
 
@@ -399,11 +405,37 @@ public abstract class SimulationFrame extends JFrame {
 		});
 
 		if (elitismCheckbox.isSelected()) {
-			System.out.println("elitism pressed initially");
+			System.out.println("Elitism pressed initially");
 			Algorithm.setElitism(true);
 		} else {
 			Algorithm.setElitism(false);
 		}
+		
+		
+		rouletWheelCheckbox = new JCheckBox("Use roulet wheel selection for GA");
+		rouletWheelCheckbox.setMnemonic(KeyEvent.VK_C);
+		rouletWheelCheckbox.setSelected(true);
+		rouletWheelCheckbox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					Algorithm.setRouletWheel(true);
+					System.out.println("Roulet wheel selection pressed");
+				} else {
+					Algorithm.setRouletWheel(false);
+
+				}
+			}
+		});
+
+		if (rouletWheelCheckbox.isSelected()) {
+			System.out.println("Roulet wheel selection pressed initially");
+			Algorithm.setRouletWheel(true);
+		} else {
+			Algorithm.setRouletWheel(false);
+		}
+		
+		
+		
 
 		JPanel container = new JPanel();
 		container.setLayout(new FlowLayout());
@@ -438,6 +470,8 @@ public abstract class SimulationFrame extends JFrame {
 		panel5.add(sliderLabelMutation);
 		panel5.add(sliderMutation);
 		panel5.add(elitismCheckbox);
+		panel5.add(rouletWheelCheckbox);
+
 
 		// panel1.set[Preferred/Maximum/Minimum]Size()
 

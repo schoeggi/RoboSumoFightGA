@@ -6,6 +6,7 @@ public class Algorithm {
 	private static final double uniformRate = 0.5;
 	private static double mutationRate = 0.015; // initial Value 0.015
 	private static boolean elitism = true;
+	private static boolean rouletWheel = true;
 
 	// Evolve a population
 	public static RobotPopulation evolvePopulation(RobotPopulation oldPopulation) {
@@ -26,8 +27,12 @@ public class Algorithm {
 			elitismOffset = 0;
 		}
 
-		//elitistCrossover(elitismOffset, oldPopulation, newPopulation);
-		rouletWheelCrossover(elitismOffset, oldPopulation, newPopulation);
+		if (rouletWheel) {
+			rouletWheelCrossover(elitismOffset, oldPopulation, newPopulation);
+		} else {
+			elitistCrossover(elitismOffset, oldPopulation, newPopulation);
+
+		}
 
 		// Mutate population
 		for (int i = elitismOffset; i < newPopulation.size(); i++) {
@@ -79,6 +84,14 @@ public class Algorithm {
 	public static void setElitism(boolean useElitism) {
 		elitism = useElitism;
 	}
+	
+	public static boolean getRouletWheel() {
+		return rouletWheel;
+	}
+
+	public static void setRouletWheel(boolean useRouletWheel) {
+		rouletWheel = useRouletWheel;
+	}
 
 	public static void setMutationRate(double newRate) {
 		mutationRate = newRate / 100;
@@ -116,17 +129,22 @@ public class Algorithm {
 			oldPopulation.getRobot(i).setLowerProbabilityBound(lowerProbabilityBound);
 			sumFitnessReduced = sumFitnessReduced - robotFitnessValue;
 		}
-		
+
 		if (sumFitnessReduced == 0) {
-			System.out.println("Splitting up fitness values worked out, sumFitnessReduced = 0");
+			System.out.println("Splitting up fitness values to probabilities worked out, sumFitnessReduced = 0");
+		} else {
+			System.out.println(
+					"Splitting up fitness values to probabilities did not worked out, leftover fitness value is: "
+							+ sumFitnessReduced);
+
 		}
 		// Loop over the population size and pass genes to robots
-		
+
 		byte[] oldGenesRobot1;
 		byte[] oldGenesRobot2;
 
 		for (int robot1 = elitismOffset; robot1 < oldPopulation.size(); robot1++) {
-			double randomCrossoverValue = Math.random() * sumFitness;				
+			double randomCrossoverValue = Math.random() * sumFitness;
 			oldGenesRobot1 = oldPopulation.getRobot(robot1).getAllGenes();
 			oldGenesRobot2 = oldPopulation.getRobot(robot1).getAllGenes();
 			for (int robot2 = elitismOffset; robot2 < oldPopulation.size(); robot2++) {
@@ -136,19 +154,21 @@ public class Algorithm {
 					if (randomCrossoverValue >= lowerProbabilityBound && randomCrossoverValue < upperProbabilityBound) {
 						oldGenesRobot2 = oldPopulation.getRobot(robot2).getAllGenes();
 						double probability = (double) (oldPopulation.getRobot(robot2).getFitness()) / sumFitness;
-						System.out.println("Crossover the following robots: " +oldPopulation.getRobot(robot1).getRobotNr() + " and " +oldPopulation.getRobot(robot2).getRobotNr() + " probability striked: " +probability);
+						System.out.println("Crossover the following robots: "
+								+ oldPopulation.getRobot(robot1).getRobotNr() + " and "
+								+ oldPopulation.getRobot(robot2).getRobotNr() + " probability striked: " + probability);
 
-						//System.out.println("Roulet Wheel selection matched! " +randomCrossoverValue);
-					}
-					else {
-						//System.out.println("NOT //// Roulet Wheel selection matched! " +randomCrossoverValue);
+						// System.out.println("Roulet Wheel selection matched! " +randomCrossoverValue);
+					} else {
+						// System.out.println("NOT //// Roulet Wheel selection matched! "
+						// +randomCrossoverValue);
 					}
 				}
 			}
 			byte[] newGenes = crossover(oldGenesRobot1, oldGenesRobot2);
 			newPopulation.getRobot(robot1).setAllGenes(newGenes);
 		}
-		
+
 	}
 
 }

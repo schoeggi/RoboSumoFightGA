@@ -69,7 +69,7 @@ public class FightingStats extends JComponent {
 
 		bufferGraphics.drawString("Generation:     " + robotGeneration, 10, 90);
 
-		bufferGraphics.drawString("Fighting time:  " + calcFightDuration() + "s", 10, 120);
+		bufferGraphics.drawString("Fighting time:  " + calcFightDuration() + "ms", 10, 120);
 
 		bufferGraphics.drawString("Last round ", 10, 150);
 
@@ -124,12 +124,12 @@ public class FightingStats extends JComponent {
 		if (startMeasuring) {
 
 			if (fightMeasuringPaused && pauseMeassuringStarted == false) {
-				pauseStart = System.currentTimeMillis() / 1000;
+				pauseStart = System.currentTimeMillis();
 				pauseMeassuringStarted = true;
 			}
 
 			if (fightMeasuringPaused == false && pauseMeassuringStarted) {
-				pauseStop = System.currentTimeMillis() / 1000;
+				pauseStop = System.currentTimeMillis();
 				pauseMeassuringStarted = false;
 				pauseDuration = (int) (pauseStop - pauseStart);
 				previousPauseDuration = previousPauseDuration + pauseDuration;
@@ -142,7 +142,7 @@ public class FightingStats extends JComponent {
 			}
 
 			if (fightGeneration < RobotPopulation.getGeneration() && fightMeassuringStarted == false) {
-				fightStart = System.currentTimeMillis() / 1000;
+				fightStart = System.currentTimeMillis();
 				fightGeneration++;
 				fightMeassuringStarted = true;
 				fightDuration = 0;
@@ -150,13 +150,13 @@ public class FightingStats extends JComponent {
 			}
 
 			if (fightGeneration == RobotPopulation.getGeneration() && fightMeassuringStarted) {
-				fightStop = System.currentTimeMillis() / 1000;
+				fightStop = System.currentTimeMillis();
 				fightDuration = (int) (fightStop - fightStart - previousPauseDuration);
 				return (int) fightDuration;
 			}
 
 			if (fightGeneration < RobotPopulation.getGeneration() && fightMeassuringStarted) {
-				fightStart = System.currentTimeMillis() / 1000;
+				fightStart = System.currentTimeMillis() ;
 				fightDuration = 0;
 				fightMeassuringStarted = false;
 
