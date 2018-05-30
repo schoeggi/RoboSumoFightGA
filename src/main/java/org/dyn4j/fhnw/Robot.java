@@ -17,7 +17,9 @@ public class Robot extends SimulationBody {
 	private double positionY;
 	private int targetedOpponent = 9999;
 	private final int maxGeneValue = 9;
-	
+	private double upperProbabilityBound = 0;	
+	private double lowerProbabilityBound = 0;	
+
 	private int robotGenerationNr = 0;
 	private boolean hasTarget = false;
 	private String robotMode = "undefined";
@@ -434,6 +436,24 @@ public class Robot extends SimulationBody {
 	public int getMaxGeneValue() {
 		return maxGeneValue;
 	}
+	
+	public double getUpperProbabilityBound() {
+		return upperProbabilityBound;
+	}
+	
+	public double getLowerProbabilityBound() {
+		return lowerProbabilityBound;
+	}
+	
+	public void setUpperProbabilityBound(double value) {
+		this.upperProbabilityBound = value;
+	}
+	
+	public void setLowerProbabilityBound(double value) {
+		this.lowerProbabilityBound = value;
+	}
+	
+	
 
 	@Override
 	public String toString() {
